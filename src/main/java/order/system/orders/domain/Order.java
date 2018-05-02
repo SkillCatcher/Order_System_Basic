@@ -2,17 +2,24 @@ package order.system.orders.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Order {
 
     private int id;
     private Client client;
+    private Date creationDate;
+    private Date modificationDate;
+    private OrderStatus status;
     private List<OrderPosition> positions;
 
-    public Order(int id, Client client) {
+    public Order(int id, Client client, Date creationDate, Date modificationDate, OrderStatus status) {
         this.id = id;
         this.client = client;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.status = status;
     }
 
     public int getId() {
@@ -21,6 +28,18 @@ public class Order {
 
     public Client getClient() {
         return client;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
     }
 
     public List<OrderPosition> getPositions() {
