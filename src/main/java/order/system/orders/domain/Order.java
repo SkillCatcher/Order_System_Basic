@@ -1,5 +1,7 @@
 package order.system.orders.domain;
 
+import order.system.orders.exceptions.WrongOrderStatusException;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +67,36 @@ public class Order {
             }
         }
         return totalCost;
+    }
+
+    public void confirm() throws WrongOrderStatusException {
+        if(status.equals(OrderStatus.NEW)) {
+            System.out.println("Confirming...");
+            this.status = OrderStatus.CONFIRMED;
+            this.modificationDate = new Date();
+        } else {
+            throw new WrongOrderStatusException("Error: Order status is not NEW");
+        }
+    }
+
+    public void pay() throws WrongOrderStatusException {
+        if (status.equals(OrderStatus.CONFIRMED)) {
+            System.out.println("Create Transaction - integration with external transaction system.....");
+            this.status = OrderStatus.PAID;
+            this.modificationDate = new Date();
+        } else {
+            throw new WrongOrderStatusException("Error: Order status is not CONFIRMED");
+        }
+    }
+
+    public void deliver() throws WrongOrderStatusException {
+        if (status.equals(OrderStatus.PAID)) {
+            System.out.println("Delivering - integration with external deliver system.....");
+            this.status = OrderStatus.DELIVERED;
+            this.modificationDate = new Date();
+        } else {
+            throw new WrongOrderStatusException("Error: Order status is not PAID");
+        }
     }
 
 }
